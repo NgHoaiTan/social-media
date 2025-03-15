@@ -16,6 +16,7 @@ const createUser = async ({ username, email, password, gender, dateOfBirth }) =>
         gender,
         dateOfBirth
     })
+
     return await newUser.save();
 }
 
