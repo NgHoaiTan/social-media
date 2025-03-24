@@ -6,6 +6,11 @@ const checkExistingUser = async (email) => {
     return existingUser;
 }
 
+const getUserById = async (id) => {
+    const user = await User.findOne({ _id: id });
+    return user;
+}
+
 const createUser = async ({ username, email, password, gender, dateOfBirth }) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({
@@ -22,4 +27,5 @@ const createUser = async ({ username, email, password, gender, dateOfBirth }) =>
 module.exports = {
     checkExistingUser,
     createUser,
+    getUserById,
 }

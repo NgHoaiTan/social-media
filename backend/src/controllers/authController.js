@@ -25,6 +25,7 @@ const googleCallback = (req, res, next) => {
             "token", token,
             {
                 httpOnly: true,
+                maxAge: 3600000,
             })
             .status(200)
             .json({
@@ -94,6 +95,7 @@ const loginUser = async (req, res) => {
         const token = generateToken(user);
         return res.cookie("token", token, {
             httpOnly: true,
+            maxAge: 3600000,
         }).status(200).json({
             message: "Login successfully",
             token: token,

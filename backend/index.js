@@ -3,11 +3,13 @@ const connectDB = require('./src/config/databaseConfig');
 const dotenv = require('dotenv').config();
 const apiV1Route = require('./src/routes/indexRoute');
 const passport = require('./src/config/passport')
+const cookieParser = require('cookie-parser')
 
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser())
 app.use(passport.initialize());
 connectDB();
 
