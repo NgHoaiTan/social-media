@@ -1,6 +1,41 @@
 const userService = require('../services/userService');
 const bcrypt = require('bcrypt');
+const passport = require('passport')
 const { generateToken } = require('../utils/generateToken');
+
+// Đăng nhập bằng Google
+const googleLogin = (req, res, next) => {
+    passport.authenticate('google', { scope: ['profile', 'email'] })(req, res, next);
+}
+
+// Callback sau khi Google xác thực
+const googleCallback = (req, res, next) => {
+    passport.authenticate('google', (err, userData) => {
+        if (err) {
+            return res.status(500).json({
+                message: 'Google login failed',
+                error: err.message
+            });
+        }
+        if (!userData) {
+            return res.status(401).json({ message: 'Authentication failed', success: false });
+        }
+        const { token } = userData;
+        res.json({ message: 'Login successful', token, success: true });
+    })(req, res, next);
+}
+
+// Đăng xuất
+const logout = (req, res) => {
+    req.logout((err) => {
+        if (err) {
+            return res.status(500).json({ message: 'Logout failed', error: err.message });
+        }
+        res.status(200).json({ message: 'Logout successful' });
+    });
+}
+
+
 const registerUser = async (req, res) => {
     try {
         const { username, email, password, gender, dateOfBirth } = req.body;
@@ -31,6 +66,7 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
+
         const user = await userService.checkExistingUser(email);
         if (!user) {
             return res.status(400).json({
@@ -61,11 +97,17 @@ const loginUser = async (req, res) => {
             success: false
         })
     }
-
-
 }
+
+
+
+
+
 
 module.exports = {
     registerUser,
-    loginUser
+    loginUser,
+    googleCallback,
+    googleLogin,
+    logout
 }

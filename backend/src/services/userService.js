@@ -1,10 +1,9 @@
-const User = require("../models/user")
+const User = require("../models/User")
 const bcrypt = require('bcrypt')
 
 const checkExistingUser = async (email) => {
     const existingUser = await User.findOne({ email: email });
     return existingUser;
-
 }
 
 const createUser = async ({ username, email, password, gender, dateOfBirth }) => {
