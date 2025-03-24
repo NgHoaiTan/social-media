@@ -21,7 +21,17 @@ const googleCallback = (req, res, next) => {
             return res.status(401).json({ message: 'Authentication failed', success: false });
         }
         const { token } = userData;
-        res.json({ message: 'Login successful', token, success: true });
+        res.cookie(
+            "token", token,
+            {
+                httpOnly: true,
+            })
+            .status(200)
+            .json({
+                message: 'Login successful',
+                token,
+                success: true
+            });
     })(req, res, next);
 }
 
