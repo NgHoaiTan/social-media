@@ -1,5 +1,6 @@
 const User = require("../models/User")
 const bcrypt = require('bcrypt')
+const mongoose = require('mongoose')
 const uploadToCloudinary = require('../utils/cloudinaryUtil')
 
 const checkExistingUser = async (email) => {
@@ -8,7 +9,14 @@ const checkExistingUser = async (email) => {
 }
 
 const getUserById = async (id) => {
-    const user = await User.findOne({ _id: id });
+    if (!mongoose.isValidObjectId(id)) {
+        throw new Error("Invalid user ID format");
+    }
+
+    const user = await User.findById(id).select('username gender dateOfBirth profilePicture posts');
+    if (!user) {
+        throw new Error("User not found");
+    }
     return user;
 }
 

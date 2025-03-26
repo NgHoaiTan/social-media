@@ -1,4 +1,19 @@
 const userService = require('../services/userService');
+
+const getProfileById = async (req, res) => {
+    const userId = req.params.id;
+    try {
+
+        const user = await userService.getUserById(userId);
+        return res.status(200).json({
+            message: "Profile retrieved successfully",
+            user,
+        })
+    } catch (error) {
+        return res.status(404).json({ message: error.message });
+    }
+}
+
 const getProfile = async (req, res) => {
     try {
         const userId = req.userId;
@@ -47,5 +62,6 @@ const editProfile = async (req, res) => {
 
 module.exports = {
     getProfile,
-    editProfile
+    editProfile,
+    getProfileById
 }
