@@ -12,11 +12,40 @@ const getProfile = async (req, res) => {
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
+}
+const editProfile = async (req, res) => {
+    try {
+        const userId = req.userId;
+        const profilePicture = req.file;
+        const { username, email, password, gender, dateOfBirth } = req.body;
+        const updatedUser = await userService.updateProfile(userId, {
+            username,
+            email,
+            password,
+            profilePicture,
+            gender,
+            dateOfBirth
+        });
+        return res.status(201).json({
+            message: "Profile updated successfully",
+            user: updatedUser,
+            success: true
+        })
 
+
+
+
+    } catch (error) {
+        return res.status(400).json({
+            message: error.message,
+            success: false
+        })
+    }
 
 
 }
 
 module.exports = {
-    getProfile
+    getProfile,
+    editProfile
 }
