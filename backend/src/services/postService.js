@@ -1,5 +1,6 @@
 const Post = require('../models/Post');
 const userService = require('./userService')
+const mongoose = require('mongoose')
 const uploadToCloudinary = require('../utils/cloudinaryUtil');
 
 const createPost = async (userId, caption, file) => {
@@ -32,6 +33,21 @@ const createPost = async (userId, caption, file) => {
 
 }
 
+const getPostById = async (id) => {
+    if (!mongoose.isValidObjectId(id)) {
+        throw new Error("Invalid Post ID format");
+    }
+
+    const post = await Post.findById(id)
+        .populate('author', 'username email')
+        .populate('likes', 'username');
+    if (!post) {
+        throw new Error("Post not found");
+    }
+    return post;
+}
+
 module.exports = {
-    createPost
+    createPost,
+    getPostById
 }
