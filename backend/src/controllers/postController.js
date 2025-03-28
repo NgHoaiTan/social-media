@@ -34,10 +34,17 @@ const getPostById = async (req, res) => {
 
 
 }
-
-const getAllPosts = async (req, res) => {
+const getPosts = async (req, res) => {
     try {
-        const userId = req.userId;
+        const requestUserId = req.query.userId;
+        const currentUserId = req.userId;
+        const targetUserId = requestUserId || currentUserId;
+
+        const posts = await postService.getAllPostsByUserId(targetUserId);
+        return res.status(200).json({
+            message: "Posts retrieved successfully",
+            posts
+        })
 
     } catch (error) {
         return res.status(400).json({
@@ -48,5 +55,6 @@ const getAllPosts = async (req, res) => {
 
 module.exports = {
     createPost,
-    getPostById
+    getPosts,
+    getPostById,
 }

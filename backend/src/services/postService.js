@@ -5,7 +5,6 @@ const uploadToCloudinary = require('../utils/cloudinaryUtil');
 
 const createPost = async (userId, caption, file) => {
     try {
-        console.log(caption)
         let mediaUrl = null;
         let mediaType = null;
         if (file) {
@@ -24,7 +23,6 @@ const createPost = async (userId, caption, file) => {
         const user = await userService.getUserById(userId);
         user.posts.push(newPost._id);
         await user.save();
-        console.log(newPost)
 
         return newPost;
     } catch (error) {
@@ -47,7 +45,24 @@ const getPostById = async (id) => {
     return post;
 }
 
+const getAllPostsByUserId = async (userId) => {
+    if (!mongoose.isValidObjectId(userId)) {
+        throw new Error("Invalid user ID format");
+    }
+
+    const posts = await Post.find({ author: userId })
+        .sort({ createdAt: -1 })
+        .populate('likes', 'username')
+        .populate('share', 'username')
+        .populate({
+            path: 'comments',
+            populate: { path: 'author', select: 'username' }
+        });
+    return posts;
+}
+
 module.exports = {
     createPost,
-    getPostById
+    getPostById,
+    getAllPostsByUserId
 }
