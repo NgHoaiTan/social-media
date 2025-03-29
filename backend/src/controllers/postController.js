@@ -53,8 +53,26 @@ const getPosts = async (req, res) => {
     }
 }
 
+const deletePost = async (req, res) => {
+    try {
+        const postId = req.params.id;
+        const message = await postService.deletePost(postId);
+        console.log(message);
+        return res.status(200).json({
+            message
+        })
+    } catch (error) {
+        return res.status(400).json({
+            error: error.message
+        })
+    }
+
+
+}
+
 module.exports = {
     createPost,
     getPosts,
     getPostById,
+    deletePost,
 }

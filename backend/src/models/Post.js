@@ -11,9 +11,9 @@ const postSchema = new mongoose.Schema({
     comments: [{
         type: mongoose.Schema.Types.ObjectId, ref: 'Comment'
     }],
-    author: [{
+    author: {
         type: mongoose.Schema.Types.ObjectId, ref: 'User'
-    }],
+    },
     share: [{
         type: mongoose.Schema.Types.ObjectId, ref: 'User'
     }]

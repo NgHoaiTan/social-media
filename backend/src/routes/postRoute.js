@@ -6,6 +6,7 @@ const upload = require('../config/multer');
 
 router.post('/', authMiddleware, upload.single('file'), postController.createPost);
 router.get('/:id', authMiddleware, postController.getPostById);
+router.delete('/:id', authMiddleware, postController.deletePost);
 router.get('/', authMiddleware, postController.getPosts);
 
 

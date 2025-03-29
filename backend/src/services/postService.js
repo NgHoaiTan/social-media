@@ -2,6 +2,8 @@ const Post = require('../models/Post');
 const userService = require('./userService')
 const mongoose = require('mongoose')
 const uploadToCloudinary = require('../utils/cloudinaryUtil');
+const User = require('../models/User');
+const Comment = require('../models/Comment')
 
 const createPost = async (userId, caption, file) => {
     try {
@@ -61,8 +63,25 @@ const getAllPostsByUserId = async (userId) => {
     return posts;
 }
 
+const deletePost = async (postId) => {
+    if (!mongoose.isValidObjectId(postId)) {
+        throw new Error("Invalid post ID format");
+    }
+    // Cập nhật user: Xóa postId khỏi mảng posts của user
+    await User.updateMany({ posts: postId }, { $pull: { posts: postId } });
+    await Comment.deleteMany({ post: postId });
+
+
+    const post = await Post.findByIdAndDelete(postId);
+    if (!post) {
+        throw new Error("Post not found");
+    }
+    return "Post deleted successfully";
+}
+
 module.exports = {
     createPost,
     getPostById,
-    getAllPostsByUserId
+    getAllPostsByUserId,
+    deletePost
 }
