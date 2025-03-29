@@ -1,7 +1,7 @@
 const User = require("../models/User")
 const bcrypt = require('bcrypt')
 const mongoose = require('mongoose')
-const uploadToCloudinary = require('../utils/cloudinaryUtil')
+const { uploadToCloudinary } = require('../utils/cloudinaryUtil')
 
 const checkExistingUser = async (email) => {
     const existingUser = await User.findOne({ email: email });
@@ -42,14 +42,17 @@ const updateProfile = async (userId, updatedUser) => {
 
     if (updatedUser.profilePicture) {
 
-        const uploadResult = await uploadToCloudinary(updatedUser.profilePicture, null, {
+
+        const uploadResult = await uploadToCloudinary(updatedUser.profilePicture, user.publicId, {
             folder: "user_avatars"
         })
         updatedUser.profilePicture = uploadResult.secure_url;
+        updatedUser.publicId = uploadResult.public_id;
+        updateKeys.push('publicId');
 
     }
 
-    if (updateKeys.includes('password')) {
+    if (updateKeys.includes('password') && updatedUser.password) {
         updatedUser.password = await bcrypt.hash(updatedUser.password, 10);
     }
 

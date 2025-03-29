@@ -5,6 +5,7 @@ const postSchema = new mongoose.Schema({
     caption: { type: String, default: '' },
     mediaUrl: { type: String, default: '' },
     mediaType: { type: String, enum: ['image', 'video'] },
+    publicId: { type: String, default: null },
     likes: [{
         type: mongoose.Schema.Types.ObjectId, ref: 'User'
     }],

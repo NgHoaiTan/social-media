@@ -31,4 +31,26 @@ const uploadToCloudinary = async (file, oldPublicId, options = {}) => {
     }
 };
 
-module.exports = uploadToCloudinary;
+
+const deleteFromCloudinary = async (publicId) => {
+    try {
+        if (!publicId) {
+            throw new Error('Public ID không hợp lệ');
+        }
+
+        const result = await cloudinary.uploader.destroy(publicId);
+
+        if (result.result !== 'ok') {
+            throw new Error('Xóa ảnh thất bại');
+        }
+
+        return { success: true, message: 'Ảnh đã được xóa' };
+    } catch (error) {
+        throw new Error('Lỗi khi xóa ảnh: ' + error.message);
+    }
+};
+
+module.exports = {
+    uploadToCloudinary,
+    deleteFromCloudinary
+};

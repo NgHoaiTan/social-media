@@ -32,6 +32,7 @@ const editProfile = async (req, res) => {
     try {
         const userId = req.userId;
         const profilePicture = req.file;
+
         const { username, email, password, gender, dateOfBirth } = req.body;
         const updatedUser = await userService.updateProfile(userId, {
             username,
