@@ -8,7 +8,7 @@ const bioSchema = new mongoose.Schema({
     education: { type: String, default: null },
     phone: { type: String, default: null },
     hometown: { type: String, default: null },
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 }, { timestamps: true })
 
 const Bio = mongoose.model('Bio', bioSchema)
