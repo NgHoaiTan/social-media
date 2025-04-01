@@ -18,6 +18,22 @@ const sendMessage = async (req, res) => {
 
 }
 
+const getMessage = async (req, res) => {
+    try {
+        const senderId = req.userId;
+        const receiverId = req.params.receiverId;
+        const messages = await messageService.getAllMessage(senderId, receiverId);
+        return res.status(200).json({
+            messages
+        })
+    } catch (error) {
+        return res.status(400).json({
+            error: error.message
+        })
+    }
+}
+
 module.exports = {
     sendMessage,
+    getMessage
 }

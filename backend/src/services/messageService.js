@@ -30,7 +30,20 @@ const createMessage = async (senderId, receiverId, message) => {
     }
 
 }
+const getAllMessage = async (senderId, receiverId) => {
+    if (senderId === receiverId) {
+        return [];
+    }
+    const conversation = await Conversation.findOne({
+        participants: { $all: [senderId, receiverId] }
+    }).populate('messages');
+    if (!conversation)
+        return [];
 
+    return conversation?.messages;
+
+}
 module.exports = {
-    createMessage
+    createMessage,
+    getAllMessage
 }
