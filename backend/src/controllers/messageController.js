@@ -1,4 +1,4 @@
-
+const { getReceiverSocketId, io } = require('../config/socket')
 const messageService = require('../services/messageService')
 const sendMessage = async (req, res) => {
     try {
@@ -7,9 +7,15 @@ const sendMessage = async (req, res) => {
         const { message } = req.body;
         const newMessage = await messageService.createMessage(senderId, receiverId, message);
 
+        const receiverSocketId = getReceiverSocketId(receiverId);
+        if (receiverSocketId) {
+            io.to(receiverSocketId).emit('newMessage', newMessage);
+        }
         return res.status(200).json({
             newMessage
         })
+
+
     } catch (error) {
         return res.status(400).json({
             error: error.message
