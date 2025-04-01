@@ -89,9 +89,34 @@ const deletePost = async (postId) => {
 
 }
 
+const updatePost = async (postId, media, caption) => {
+    try {
+        const post = await Post.findById(postId);
+        if (!post) {
+            throw new Error("Post not found");
+        }
+        if (media) {
+            const uploadResult = await uploadToCloudinary(media, post.publicId, {
+                folder: "user_posts"
+            })
+            post.mediaUrl = uploadResult.secure_url;
+            post.mediaType = media.mimetype.startsWith('video') ? 'video' : 'image';
+            post.publicId = uploadResult.public_id;
+        }
+
+        post.caption = caption;
+        await post.save();
+        return post;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+
+}
+
 module.exports = {
     createPost,
     getPostById,
     getAllPostsByUserId,
-    deletePost
+    deletePost,
+    updatePost
 }

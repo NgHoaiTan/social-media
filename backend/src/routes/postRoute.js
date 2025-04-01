@@ -8,6 +8,7 @@ const authorizationMiddleware = require('../middleware/authorizationMiddleware')
 router.post('/', authMiddleware, upload.single('file'), postController.createPost);
 router.get('/:id', authMiddleware, postController.getPostById);
 router.delete('/:id', authMiddleware, authorizationMiddleware('Post'), postController.deletePost);
+router.put('/:id', authMiddleware, authorizationMiddleware('Post'), upload.single('media'), postController.updatePost);
 router.get('/', authMiddleware, postController.getPosts);
 
 

@@ -57,7 +57,6 @@ const deletePost = async (req, res) => {
     try {
         const postId = req.params.id;
         const message = await postService.deletePost(postId);
-        console.log(message);
         return res.status(200).json({
             message
         })
@@ -66,13 +65,32 @@ const deletePost = async (req, res) => {
             error: error.message
         })
     }
+}
 
+const updatePost = async (req, res) => {
+    try {
+        const postId = req.params.id;
+        const media = req.file;
+        const { caption } = req.body;
+        const post = await postService.updatePost(postId, media, caption);
+        return res.status(200).json({
+            message: "Post updated successfully",
+            post
+        })
+    } catch (error) {
+        return res.status(400).json({
+            error: error.message
+        })
+    }
 
 }
+
+
 
 module.exports = {
     createPost,
     getPosts,
     getPostById,
     deletePost,
+    updatePost
 }
