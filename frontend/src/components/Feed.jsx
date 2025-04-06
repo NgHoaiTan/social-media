@@ -6,7 +6,7 @@ const samplePosts = [
     userName: "John Doe",
     timestamp: "2 hours ago",
     content: "Hello, this is a sample post!",
-    image: "/facebook-logo.jpeg",
+    image: "/content.jpg",
   },
   {
     id: "2",
@@ -14,12 +14,19 @@ const samplePosts = [
     timestamp: "5 hours ago",
     content: "Enjoying the day!",
   },
+  {
+    id: "3",
+    userName: "Hoài Tân",
+    timestamp: "2 hours ago",
+    content: "Hello, this is a sample post!",
+    image: "/facebook-logo.jpeg",
+  },
 ];
 
 function Feed() {
   return (
-    <div className="flex-1 p-4 lg:ml-64">
-      <div className="max-w-2xl mx-auto">
+    <div className="flex-1 p-6">
+      <div className="max-w-screen-xl mx-auto">
         {samplePosts.map((post) => (
           <Post key={post.id} post={post} />
         ))}

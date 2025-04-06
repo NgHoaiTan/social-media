@@ -1,5 +1,6 @@
-import Header from "../components/Header";
-import Sidebar from "../components/Sidebar";
+import Header from "@/components/Header";
+import Sidebar from "@/components/Sidebar";
+import RightSidebar from "@/components/RightSidebar";
 
 function DefaultLayout({ children }) {
   return (
@@ -7,7 +8,12 @@ function DefaultLayout({ children }) {
       <Header />
       <div className="flex">
         <Sidebar />
-        <main className="flex-1 p-4 pt-14 lg:ml-64">{children}</main>
+
+        <main className="flex-1 pt-14 px-4 lg:px-64 max-w-6xl mx-auto">
+          {children}
+        </main>
+
+        <RightSidebar />
       </div>
     </div>
   );

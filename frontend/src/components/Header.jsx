@@ -9,7 +9,7 @@ function Header() {
       <div className="flex items-center space-x-3">
         <img src="/logo.png" alt="Facebook" className="w-10 h-10" />
 
-        <div className="relative">
+        <div className="relative w-60 h-10">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
           <Input
             type="text"
