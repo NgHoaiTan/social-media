@@ -7,18 +7,28 @@ function Post({ post }) {
       <CardHeader>
         <div className="flex items-center space-x-3">
           <Avatar>
-            <AvatarFallback>{post.userName[0]}</AvatarFallback>
+            <img
+              src={post.author.profilePicture}
+              alt={post.author.username}
+              className="w-full h-full object-cover rounded-full"
+            />
           </Avatar>
           <div>
-            <p className="font-semibold">{post.userName}</p>
-            <p className="text-sm text-gray-500">{post.timestamp}</p>
+            <p className="font-semibold">{post.author.username}</p>
+            <p className="text-sm text-gray-500">
+              {new Date(post.createdAt).toLocaleString()}
+            </p>
           </div>
         </div>
       </CardHeader>
       <CardContent>
-        <p>{post.content}</p>
-        {post.image && (
-          <img src={post.image} alt="Post" className="mt-2 rounded-lg w-full" />
+        <p>{post.caption}</p>
+        {post.mediaUrl && (
+          <img
+            src={post.mediaUrl}
+            alt="Post"
+            className="mt-2 rounded-lg w-full"
+          />
         )}
       </CardContent>
     </Card>
