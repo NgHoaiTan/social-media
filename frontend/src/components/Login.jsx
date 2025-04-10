@@ -99,8 +99,10 @@ function Login() {
             <hr className="my-4 w-full" />
             <div className="text-center w-full">
               <Button
+                type="button"
                 variant="outline"
                 className="w-[179px] bg-[#42b72a] text-white hover:bg-[#36a420]"
+                onClick={() => navigate("/register")}
               >
                 Tạo tài khoản mới
               </Button>

@@ -48,13 +48,12 @@ function Post({ post }) {
             onClick={toggleLike}
           >
             <Heart
-              className={`w-5 h-5 ${
-                post.liked ? "text-red-500 fill-red-500" : ""
+              className={`w-5 h-5 transition-all duration-200 ${
+                liked ? "text-red-500 fill-red-500" : "text-gray-500"
               }`}
             />
-            <span>Thích</span>
+            <span className={liked ? "text-red-500" : ""}>Thích</span>
           </div>
-
           <div
             className="flex items-center space-x-1 cursor-pointer"
             // onClick={() => setShowComments(!showComments)}
