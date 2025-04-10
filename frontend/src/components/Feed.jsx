@@ -20,8 +20,8 @@ function Feed() {
   }, [isAuthenticated, userId]);
 
   return (
-    <div className="flex-1 p-6">
-      <div className="max-w-screen-xl mx-auto">
+    <div className="flex-1 p-6 ">
+      <div className="max-w-screen-xl mx-auto w-[500px]">
         {posts.length > 0 ? (
           posts.map((post) => <Post key={post._id} post={post} />)
         ) : (
