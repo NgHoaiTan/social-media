@@ -2,7 +2,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import axios from "@/utils/axiosInstance";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Users } from "lucide-react";
+import { Users, SquarePlus } from "lucide-react";
+import CreatePost from "@/components/CreatePost";
 
 function Sidebar() {
   const [user, setUser] = useState(null);
@@ -49,15 +50,16 @@ function Sidebar() {
           <div className="w-10 h-10 flex items-center justify-center bg-green-100 rounded-full">
             <Users className="w-5 h-5 text-green-600" />
           </div>
-          <span className="font-medium text-base">Friends</span>
+          <span className="font-medium text-base">Bạn bè</span>
         </li>
 
-        <li className="flex items-center space-x-3 hover:bg-gray-200 p-2 rounded-xl transition duration-200 cursor-pointer">
+        {/* <li className="flex items-center space-x-3 hover:bg-gray-200 p-2 rounded-xl transition duration-200 cursor-pointer">
           <div className="w-10 h-10 flex items-center justify-center bg-red-100 rounded-full">
-            <Users className="w-5 h-5 text-red-600" />
+            <SquarePlus className="w-5 h-5 text-red-600" />
           </div>
-          <span className="font-medium text-base">Groups</span>
-        </li>
+          <span className="font-medium text-base">Thêm bài viết</span>
+        </li> */}
+        <CreatePost user={user} />
       </ul>
     </aside>
   );

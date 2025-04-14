@@ -2,8 +2,10 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useAuthContext } from "@/context/AuthContext";
 
 function Header() {
+  const { logout } = useAuthContext();
   return (
     <header className="bg-header text-white w-full h-14 p-3 flex items-center justify-between fixed top-0 z-50 shadow-md border-b border-gray-200">
       <div className="flex items-center space-x-3">
@@ -32,14 +34,13 @@ function Header() {
         </Button>
       </nav>
       <div>
-        <Link to="/profile">
-          <Button
-            variant="outline"
-            className="text-white border-white hover:bg-blue-700"
-          >
-            Profile
-          </Button>
-        </Link>
+        <Button
+          variant="outline"
+          className="text-white border-white hover:bg-blue-700"
+          onClick={logout}
+        >
+          Logout
+        </Button>
       </div>
     </header>
   );
