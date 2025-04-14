@@ -4,9 +4,10 @@ const router = express.Router();
 const authMiddleware = require('../middleware/authMiddleware');
 const upload = require('../config/multer')
 
-router.get('/:id', authMiddleware, userController.getProfileById);
+
 router.get('/profile', authMiddleware, userController.getProfile);
 router.put('/profile', authMiddleware, upload.single('profilePicture'), userController.editProfile);
+router.get('/:id', authMiddleware, userController.getProfileById);
 
 
 module.exports = router;

@@ -5,6 +5,7 @@ const authMiddleware = require('../middleware/authMiddleware');
 const upload = require('../config/multer');
 const authorizationMiddleware = require('../middleware/authorizationMiddleware')
 
+// router.get('/:postId/comments', authMiddleware, postController.getComments);
 router.post('/', authMiddleware, upload.single('file'), postController.createPost);
 router.get('/:id', authMiddleware, postController.getPostById);
 router.delete('/:id', authMiddleware, authorizationMiddleware('Post'), postController.deletePost);

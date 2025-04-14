@@ -58,6 +58,7 @@ const getAllPostsByUserId = async (userId) => {
 
     const posts = await Post.find({ author: userId })
         .sort({ createdAt: -1 })
+        .populate('author', 'username profilePicture')
         .populate('likes', 'username')
         .populate('share', 'username')
         .populate({

@@ -9,7 +9,8 @@ const createPost = async (req, res) => {
         const post = await postService.createPost(userId, caption, file);
         return res.status(201).json({
             message: "Post created successfully",
-            post
+            post,
+            success: true
         })
     } catch (error) {
         return res.status(400).json({
